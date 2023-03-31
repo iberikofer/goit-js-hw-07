@@ -45,7 +45,8 @@ function clickFunc(event) {
   instance.show();
 
   function closeOnEscape(event) {
-    event.nodeName === "ESCAPE";
-    instance.close();
+    if (event.code === "Escape") {
+      instance.close();
+    }
   }
 }
