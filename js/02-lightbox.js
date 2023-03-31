@@ -3,8 +3,8 @@ import { galleryItems } from "./gallery-items.js";
 
 const galleryList = document.getElementsByClassName("gallery")[0];
 
-function doMarkup(objectOfImages) {
-  const galleryItems = objectOfImages
+function doMarkup(array) {
+  return array
     .map(({ preview, original, description }) => {
       return `
       <li class="gallery__item">
@@ -15,23 +15,15 @@ function doMarkup(objectOfImages) {
         `;
     })
     .join("");
-  return galleryItems;
 }
 
-galleryList.insertAdjacentHTML("beforeend", doMarkup(galleryItems));
-
-galleryList.addEventListener("click", clickFunc);
-function clickFunc(event) {
-  event.preventDefault();
-  const element = event.target;
-
-  if (element.nodeName !== "IMG") {
-    return;
-  }
-
-  const gallery = new SimpleLightbox(".gallery a", {
-    captionsData: `alt`,
-    captionPosition: "bottom",
-    captionDelay: 250,
-  });
+function replaceMarkupToDoc(markupString) {
+  galleryList.innerHTML = markupString;
 }
+
+replaceMarkupToDoc(doMarkup(galleryItems));
+
+new SimpleLightbox(".gallery a", {
+  captionsData: `alt`,
+  captionDelay: 250,
+});
